@@ -61,15 +61,15 @@ classdef XYZPlot<handle
             ylabel('Z');
         end
         
-        function obj=addpoint(obj,xval,yval,zval,tval)
+        function obj=addpoint(obj,array)
             %adds data to plot
             obj.index = obj.index + 1;
             if(nargin > 0)
                 %update data
-                obj.x(obj.index) = xval;
-                obj.y(obj.index) = yval;
-                obj.z(obj.index) = zval;
-                obj.t(obj.index) = tval;
+                obj.x(obj.index) = array(1);
+                obj.y(obj.index) = array(2);
+                obj.z(obj.index) = array(3);
+                obj.t(obj.index) = array(4);
                 
                 %update plots
                 if obj.index <= obj.plotsize
@@ -81,6 +81,8 @@ classdef XYZPlot<handle
                     set(obj.yplot,'XData',obj.t((obj.index-obj.plotsize):obj.index),'YData',obj.y((obj.index-obj.plotsize):obj.index));
                     set(obj.zplot,'XData',obj.t((obj.index-obj.plotsize):obj.index),'YData',obj.z((obj.index-obj.plotsize):obj.index));
                 end
+                %give it time to redraw
+                pause(0.0001);
                 
                 %limit ram usage
                 if obj.index  == obj.datasize
